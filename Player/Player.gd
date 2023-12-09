@@ -7,6 +7,8 @@ const MOUSE_SENSITIVITY = 0.005
 const MOUSE_RANGE = 1.2
 const Balloon = preload("res://Dialogue/balloon.tscn")
 var played = false
+var destination_position : Vector3 = Vector3(2.0, 1.109, -2.678)
+var destination_position2 : Vector3 = Vector3(-4.0, 1.109, 13.103)
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
@@ -50,3 +52,11 @@ func _on_area_3d_body_entered(body):
 		get_tree().current_scene.add_child(balloon)
 		balloon.start(load("res://Dialogue/dialogue.dialogue"), "main")
 		played = true
+
+
+func _on_teleport_1_body_entered(body):
+	self.position = destination_position 
+
+
+func _on_teleport_2_body_entered(body):
+	self.position = destination_position2 

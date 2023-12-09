@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://jdg1g2br7oba"]
+[gd_scene load_steps=13 format=3 uid="uid://jdg1g2br7oba"]
 
 [ext_resource type="Script" path="res://Player/Player.gd" id="1_5memk"]
 [ext_resource type="Script" path="res://game.gd" id="1_143h5"]
@@ -18,6 +18,8 @@ albedo_texture = ExtResource("2_ncj6e")
 [sub_resource type="BoxShape3D" id="BoxShape3D_fq4gx"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_jh5jt"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_hs7jk"]
 
 [node name="Game" type="Node3D"]
 script = ExtResource("1_143h5")
@@ -329,6 +331,10 @@ shape = SubResource("BoxShape3D_fq4gx")
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Goal"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.05148, 1.13035, 0.0932484)
 mesh = SubResource("CapsuleMesh_jh5jt")
+
+[node name="NPC" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.585, 1.32814, -16.3221)
+mesh = SubResource("CapsuleMesh_hs7jk")
 
 [connection signal="pressed" from="Menu/Resume" to="Menu" method="_on_resume_pressed"]
 [connection signal="pressed" from="Menu/Quit" to="Menu" method="_on_quit_pressed"]

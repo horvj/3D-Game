@@ -12,4 +12,4 @@ func _process(delta):
 
 
 func _on_goal_body_entered(body):
-	get_tree().change_scene("res://UI/win.tscn")
+	get_tree().change_scene_to_file("res://UI/win.tscn")

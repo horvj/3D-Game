@@ -5,7 +5,8 @@ const SPEED = 5.0
 const JUMP_VELOCITY = 4.5
 const MOUSE_SENSITIVITY = 0.005
 const MOUSE_RANGE = 1.2
-
+const Balloon = preload("res://Dialogue/balloon.tscn")
+var played = false
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
@@ -41,3 +42,11 @@ func _physics_process(delta):
 		velocity.z = move_toward(velocity.z, 0, SPEED)
 
 	move_and_slide()
+
+
+func _on_area_3d_body_entered(body):
+	if Input.is_action_pressed("dialogue") and not played:
+		var balloon = Balloon.instantiate()
+		get_tree().current_scene.add_child(balloon)
+		balloon.start(load("res://Dialogue/dialogue.dialogue"), "main")
+		played = true

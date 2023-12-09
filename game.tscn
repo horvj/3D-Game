@@ -1,10 +1,11 @@
-[gd_scene load_steps=13 format=3 uid="uid://jdg1g2br7oba"]
+[gd_scene load_steps=17 format=3 uid="uid://jdg1g2br7oba"]
 
 [ext_resource type="Script" path="res://Player/Player.gd" id="1_5memk"]
 [ext_resource type="Script" path="res://game.gd" id="1_143h5"]
 [ext_resource type="Script" path="res://UI/Menu.gd" id="2_hufqf"]
 [ext_resource type="Texture2D" uid="uid://cas6fuadqna1y" path="res://Assets/redrock02.png" id="2_ncj6e"]
 [ext_resource type="LabelSettings" uid="uid://bd50rb2ewsar3" path="res://UI/game.tres" id="4_b5jnx"]
+[ext_resource type="Script" path="res://UI/UI.gd" id="6_gw5bf"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_xef1f"]
 
@@ -19,7 +20,13 @@ albedo_texture = ExtResource("2_ncj6e")
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_jh5jt"]
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_lqryt"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_4foes"]
+
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_hs7jk"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_d5yfu"]
 
 [node name="Game" type="Node3D"]
 script = ExtResource("1_143h5")
@@ -332,10 +339,62 @@ shape = SubResource("BoxShape3D_fq4gx")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.05148, 1.13035, 0.0932484)
 mesh = SubResource("CapsuleMesh_jh5jt")
 
-[node name="NPC" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.585, 1.32814, -16.3221)
+[node name="UI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("6_gw5bf")
+
+[node name="Label" type="Label" parent="UI"]
+layout_mode = 1
+offset_right = 40.0
+offset_bottom = 23.0
+label_settings = ExtResource("4_b5jnx")
+
+[node name="Timer" type="Timer" parent="UI"]
+wait_time = 0.001
+autostart = true
+
+[node name="Label2" type="Label" parent="UI"]
+visible = false
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 77.0
+offset_top = 323.0
+offset_right = 221.0
+offset_bottom = 349.0
+grow_vertical = 2
+text = "Press E to interact:"
+
+[node name="Teleport1" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.43944, 1.10923, 13.1026)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Teleport1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.165652, 0.341158, 0.157473)
+shape = SubResource("BoxShape3D_lqryt")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Teleport1"]
+transform = Transform3D(1, 0, 0, 0, 0.197568, 0, 0, 0, 1, 0, -0.199321, 0.114289)
+mesh = SubResource("BoxMesh_4foes")
+
+[node name="Area3D" type="Area3D" parent="."]
+
+[node name="NPC" type="MeshInstance3D" parent="Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.585, 0.992168, -16.3221)
 mesh = SubResource("CapsuleMesh_hs7jk")
+skeleton = NodePath("../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+transform = Transform3D(1.29972, 0, 0, 0, 1.60258, 0, 0, 0, 2.65058, -10.4262, 0.976923, -15.5804)
+shape = SubResource("BoxShape3D_d5yfu")
 
 [connection signal="pressed" from="Menu/Resume" to="Menu" method="_on_resume_pressed"]
 [connection signal="pressed" from="Menu/Quit" to="Menu" method="_on_quit_pressed"]
 [connection signal="body_entered" from="Goal" to="." method="_on_goal_body_entered"]
+[connection signal="timeout" from="UI/Timer" to="UI" method="_on_timer_timeout"]
+[connection signal="body_entered" from="Area3D" to="Player" method="_on_area_3d_body_entered"]
+[connection signal="body_entered" from="Area3D" to="UI" method="_on_area_3d_body_entered"]
+[connection signal="body_exited" from="Area3D" to="UI" method="_on_area_3d_body_exited"]

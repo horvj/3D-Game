@@ -60,3 +60,11 @@ func _on_teleport_1_body_entered(body):
 
 func _on_teleport_2_body_entered(body):
 	self.position = destination_position2 
+
+
+
+	
+
+
+func _on_hitbox_area_entered(area):
+	get_tree().change_scene_to_file("res://UI/main_menu.tscn")

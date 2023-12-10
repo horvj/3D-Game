@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://jdg1g2br7oba"]
+[gd_scene load_steps=25 format=3 uid="uid://jdg1g2br7oba"]
 
 [ext_resource type="Script" path="res://Player/Player.gd" id="1_5memk"]
 [ext_resource type="Script" path="res://game.gd" id="1_143h5"]
@@ -6,6 +6,10 @@
 [ext_resource type="Texture2D" uid="uid://cas6fuadqna1y" path="res://Assets/redrock02.png" id="2_ncj6e"]
 [ext_resource type="LabelSettings" uid="uid://bd50rb2ewsar3" path="res://UI/game.tres" id="4_b5jnx"]
 [ext_resource type="Script" path="res://UI/UI.gd" id="6_gw5bf"]
+[ext_resource type="Texture2D" uid="uid://cdihctrx5qeh7" path="res://Dialogue/concrete06.png" id="6_kvuro"]
+[ext_resource type="Texture2D" uid="uid://icsakjiei6cp" path="res://Dialogue/grass02.png" id="8_ynjt6"]
+[ext_resource type="Script" path="res://Enemy/Enemy.gd" id="9_bp0ki"]
+[ext_resource type="PackedScene" uid="uid://mdec4vt2n2e5" path="res://Enemy/character_medium.tscn" id="9_mwj6m"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_xef1f"]
 
@@ -16,17 +20,28 @@ albedo_texture = ExtResource("2_ncj6e")
 
 [sub_resource type="BoxMesh" id="BoxMesh_7tpcc"]
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_78wwp"]
+albedo_texture = ExtResource("6_kvuro")
+
 [sub_resource type="BoxShape3D" id="BoxShape3D_fq4gx"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_jh5jt"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_lqryt"]
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bbvsb"]
+albedo_texture = ExtResource("8_ynjt6")
+
 [sub_resource type="BoxMesh" id="BoxMesh_4foes"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_opo7v"]
+albedo_texture = ExtResource("8_ynjt6")
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_hs7jk"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_d5yfu"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_81cq7"]
 
 [node name="Game" type="Node3D"]
 script = ExtResource("1_143h5")
@@ -109,6 +124,7 @@ text = "Quit"
 
 [node name="Maze" type="CSGBox3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.08987, 0.105631, 0.426428)
+material_override = SubResource("StandardMaterial3D_78wwp")
 operation = 1
 use_collision = true
 size = Vector3(34.3028, 4.32951, 39.3544)
@@ -378,6 +394,7 @@ shape = SubResource("BoxShape3D_lqryt")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Teleport1"]
 transform = Transform3D(1, 0, 0, 0, 0.197568, 0, 0, 0, 1, 0, -0.199321, 0.114289)
+material_override = SubResource("StandardMaterial3D_bbvsb")
 mesh = SubResource("BoxMesh_4foes")
 
 [node name="Teleport2" type="Area3D" parent="."]
@@ -389,6 +406,7 @@ shape = SubResource("BoxShape3D_lqryt")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Teleport2"]
 transform = Transform3D(1, 0, 0, 0, 0.197568, 0, 0, 0, 1, 0, -0.199321, 0.114289)
+material_override = SubResource("StandardMaterial3D_opo7v")
 mesh = SubResource("BoxMesh_4foes")
 
 [node name="Area3D" type="Area3D" parent="."]
@@ -402,6 +420,25 @@ skeleton = NodePath("../..")
 transform = Transform3D(1.29972, 0, 0, 0, 1.60258, 0, 0, 0, 2.65058, -10.4262, 0.976923, -15.5804)
 shape = SubResource("BoxShape3D_d5yfu")
 
+[node name="Enemy" type="CharacterBody3D" parent="."]
+transform = Transform3D(-0.5, 0, -4.37114e-08, 0, 0.5, 0, 4.37114e-08, 0, -0.5, -15.7109, 0.75131, 1.62738)
+script = ExtResource("9_bp0ki")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="Enemy"]
+transform = Transform3D(-2, 0, 1.74846e-07, 0, 2, 0, -1.74846e-07, 0, -2, 0.050621, 0.628791, -0.285916)
+shape = SubResource("CapsuleShape3D_81cq7")
+
+[node name="characterMedium" parent="Enemy" instance=ExtResource("9_mwj6m")]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -0.0941696, -1.40527, -2.38419e-07)
+
+[node name="Hitbox" type="Area3D" parent="Enemy"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.93834, 0)
+visible = false
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="Enemy/Hitbox"]
+transform = Transform3D(-2, 0, 1.74846e-07, 0, 2, 0, -1.74846e-07, 0, -2, 0.050621, -0.79354, -0.285916)
+shape = SubResource("CapsuleShape3D_81cq7")
+
 [connection signal="pressed" from="Menu/Resume" to="Menu" method="_on_resume_pressed"]
 [connection signal="pressed" from="Menu/Quit" to="Menu" method="_on_quit_pressed"]
 [connection signal="body_entered" from="Goal" to="." method="_on_goal_body_entered"]
@@ -411,3 +448,4 @@ shape = SubResource("BoxShape3D_d5yfu")
 [connection signal="body_entered" from="Area3D" to="Player" method="_on_area_3d_body_entered"]
 [connection signal="body_entered" from="Area3D" to="UI" method="_on_area_3d_body_entered"]
 [connection signal="body_exited" from="Area3D" to="UI" method="_on_area_3d_body_exited"]
+[connection signal="area_entered" from="Enemy/Hitbox" to="Player" method="_on_hitbox_area_entered"]

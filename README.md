@@ -11,7 +11,8 @@ Additional Features:
 - Interacting with an NPC and having dialogue
 - Timer as highscore
 -   Displays last score on the main menu
-- Added music and sound effects
+- Added music to level
+- Added skybox
 ## What Makes this a Game?
 You can win it and it is fun!
 ## References

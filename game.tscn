@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://jdg1g2br7oba"]
+[gd_scene load_steps=30 format=3 uid="uid://jdg1g2br7oba"]
 
 [ext_resource type="Script" path="res://Player/Player.gd" id="1_5memk"]
 [ext_resource type="Script" path="res://game.gd" id="1_143h5"]
@@ -6,10 +6,12 @@
 [ext_resource type="Texture2D" uid="uid://cas6fuadqna1y" path="res://Assets/redrock02.png" id="2_ncj6e"]
 [ext_resource type="LabelSettings" uid="uid://bd50rb2ewsar3" path="res://UI/game.tres" id="4_b5jnx"]
 [ext_resource type="Script" path="res://UI/UI.gd" id="6_gw5bf"]
-[ext_resource type="Texture2D" uid="uid://cdihctrx5qeh7" path="res://Dialogue/concrete06.png" id="6_kvuro"]
-[ext_resource type="Texture2D" uid="uid://icsakjiei6cp" path="res://Dialogue/grass02.png" id="8_ynjt6"]
+[ext_resource type="Texture2D" uid="uid://cdihctrx5qeh7" path="res://Assets/concrete06.png" id="6_hcwj3"]
+[ext_resource type="Texture2D" uid="uid://icsakjiei6cp" path="res://Assets/grass02.png" id="8_e3xqw"]
 [ext_resource type="Script" path="res://Enemy/Enemy.gd" id="9_bp0ki"]
 [ext_resource type="PackedScene" uid="uid://mdec4vt2n2e5" path="res://Enemy/character_medium.tscn" id="9_mwj6m"]
+[ext_resource type="AudioStream" uid="uid://bpwu1siy5qute" path="res://Assets/Hitman(chosic.com).mp3" id="11_wtiw0"]
+[ext_resource type="Texture2D" uid="uid://dk1l6fshvtgtl" path="res://Assets/zpos_0.png" id="12_wsach"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_xef1f"]
 
@@ -21,7 +23,7 @@ albedo_texture = ExtResource("2_ncj6e")
 [sub_resource type="BoxMesh" id="BoxMesh_7tpcc"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_78wwp"]
-albedo_texture = ExtResource("6_kvuro")
+albedo_texture = ExtResource("6_hcwj3")
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_fq4gx"]
 
@@ -30,18 +32,29 @@ albedo_texture = ExtResource("6_kvuro")
 [sub_resource type="BoxShape3D" id="BoxShape3D_lqryt"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bbvsb"]
-albedo_texture = ExtResource("8_ynjt6")
+albedo_texture = ExtResource("8_e3xqw")
 
 [sub_resource type="BoxMesh" id="BoxMesh_4foes"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_opo7v"]
-albedo_texture = ExtResource("8_ynjt6")
+albedo_texture = ExtResource("8_e3xqw")
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_hs7jk"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_d5yfu"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_81cq7"]
+
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_4qoc8"]
+panorama = ExtResource("12_wsach")
+
+[sub_resource type="Sky" id="Sky_j822l"]
+sky_material = SubResource("PanoramaSkyMaterial_4qoc8")
+
+[sub_resource type="Environment" id="Environment_asiby"]
+background_mode = 2
+background_energy_multiplier = 1.45
+sky = SubResource("Sky_j822l")
 
 [node name="Game" type="Node3D"]
 script = ExtResource("1_143h5")
@@ -438,6 +451,12 @@ visible = false
 [node name="CollisionShape3D2" type="CollisionShape3D" parent="Enemy/Hitbox"]
 transform = Transform3D(-2, 0, 1.74846e-07, 0, 2, 0, -1.74846e-07, 0, -2, 0.050621, -0.79354, -0.285916)
 shape = SubResource("CapsuleShape3D_81cq7")
+
+[node name="Music" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("11_wtiw0")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_asiby")
 
 [connection signal="pressed" from="Menu/Resume" to="Menu" method="_on_resume_pressed"]
 [connection signal="pressed" from="Menu/Quit" to="Menu" method="_on_quit_pressed"]

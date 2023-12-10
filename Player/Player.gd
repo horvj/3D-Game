@@ -5,7 +5,7 @@ const SPEED = 5.0
 const JUMP_VELOCITY = 4.5
 const MOUSE_SENSITIVITY = 0.005
 const MOUSE_RANGE = 1.2
-const Balloon = preload("res://Dialogue/balloon.tscn")
+const Balloon = preload("res://Dialogue/small_balloon.tscn")
 var played = false
 var destination_position : Vector3 = Vector3(2.0, 1.109, -2.678)
 var destination_position2 : Vector3 = Vector3(-4.0, 1.109, 13.103)
@@ -24,6 +24,15 @@ func _unhandled_input(event):
 		rotate_y(-event.relative.x * MOUSE_SENSITIVITY)
 
 func _physics_process(delta):
+	var a = get_node_or_null("/root/Game/Area3D")
+	if a != null:
+		if Input.is_action_pressed("dialogue") and not played:
+			for b in a.get_overlapping_bodies():
+				if b.name == "Player":
+					var balloon = Balloon.instantiate()
+					get_tree().current_scene.add_child(balloon)
+					balloon.start(load("res://Dialogue/dialogue.dialogue"), "main")
+					played = true
 	# Add the gravity.
 	if not is_on_floor():
 		velocity.y -= gravity * delta

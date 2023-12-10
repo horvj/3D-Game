@@ -1,0 +1,470 @@
+[gd_scene load_steps=30 format=3 uid="uid://jdg1g2br7oba"]
+
+[ext_resource type="Script" path="res://Player/Player.gd" id="1_5memk"]
+[ext_resource type="Script" path="res://game.gd" id="1_143h5"]
+[ext_resource type="Script" path="res://UI/Menu.gd" id="2_hufqf"]
+[ext_resource type="Texture2D" uid="uid://cas6fuadqna1y" path="res://Assets/redrock02.png" id="2_ncj6e"]
+[ext_resource type="LabelSettings" uid="uid://bd50rb2ewsar3" path="res://UI/game.tres" id="4_b5jnx"]
+[ext_resource type="Script" path="res://UI/UI.gd" id="6_gw5bf"]
+[ext_resource type="Texture2D" uid="uid://cdihctrx5qeh7" path="res://Assets/concrete06.png" id="6_hcwj3"]
+[ext_resource type="Texture2D" uid="uid://icsakjiei6cp" path="res://Assets/grass02.png" id="8_e3xqw"]
+[ext_resource type="Script" path="res://Enemy/Enemy.gd" id="9_bp0ki"]
+[ext_resource type="PackedScene" uid="uid://mdec4vt2n2e5" path="res://Enemy/character_medium.tscn" id="9_mwj6m"]
+[ext_resource type="AudioStream" uid="uid://bpwu1siy5qute" path="res://Assets/Hitman(chosic.com).mp3" id="11_wtiw0"]
+[ext_resource type="Texture2D" uid="uid://dk1l6fshvtgtl" path="res://Assets/zpos_0.png" id="12_wsach"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_xef1f"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_yk5jy"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7gmbp"]
+albedo_texture = ExtResource("2_ncj6e")
+
+[sub_resource type="BoxMesh" id="BoxMesh_7tpcc"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_78wwp"]
+albedo_texture = ExtResource("6_hcwj3")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_fq4gx"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_jh5jt"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_lqryt"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bbvsb"]
+albedo_texture = ExtResource("8_e3xqw")
+
+[sub_resource type="BoxMesh" id="BoxMesh_4foes"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_opo7v"]
+albedo_texture = ExtResource("8_e3xqw")
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_hs7jk"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_d5yfu"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_81cq7"]
+
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_4qoc8"]
+panorama = ExtResource("12_wsach")
+
+[sub_resource type="Sky" id="Sky_j822l"]
+sky_material = SubResource("PanoramaSkyMaterial_4qoc8")
+
+[sub_resource type="Environment" id="Environment_asiby"]
+background_mode = 2
+background_energy_multiplier = 1.45
+sky = SubResource("Sky_j822l")
+
+[node name="Game" type="Node3D"]
+script = ExtResource("1_143h5")
+
+[node name="Player" type="CharacterBody3D" parent="."]
+transform = Transform3D(-0.98009, -0.00150431, 0.198546, -0.00155535, 0.999999, -0.000101136, -0.198546, -0.00040791, -0.980092, -15.5196, 1.12459, -15.7621)
+script = ExtResource("1_5memk")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Player"]
+shape = SubResource("CapsuleShape3D_xef1f")
+
+[node name="Pivot" type="Node3D" parent="Player"]
+
+[node name="Camera3D" type="Camera3D" parent="Player/Pivot"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.573158, 0)
+
+[node name="Floor" type="StaticBody3D" parent="."]
+transform = Transform3D(4.7098, 0, 0, 0, 1, 0, 0, 0, 4.58144, -0.745173, 0, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor"]
+transform = Transform3D(8.79929, 0, 0, 0, 0.278608, 0, 0, 0, 8.93953, 0, 0, 0)
+shape = SubResource("BoxShape3D_yk5jy")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Floor"]
+transform = Transform3D(7.10214, 0, 0, 0, 0.0250055, 0, 0, 0, 8.45942, 0, 0, 0.103912)
+material_override = SubResource("StandardMaterial3D_7gmbp")
+mesh = SubResource("BoxMesh_7tpcc")
+skeleton = NodePath("../..")
+
+[node name="Menu" type="Control" parent="."]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("2_hufqf")
+
+[node name="ColorRect" type="ColorRect" parent="Menu"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.898039, 0.94902, 0.992157, 1)
+
+[node name="Label" type="Label" parent="Menu"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -11.5
+offset_right = 20.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "Paused"
+label_settings = ExtResource("4_b5jnx")
+
+[node name="Resume" type="Button" parent="Menu"]
+layout_mode = 0
+offset_left = 496.0
+offset_top = 366.0
+offset_right = 653.0
+offset_bottom = 405.0
+text = "Resume"
+
+[node name="Quit" type="Button" parent="Menu"]
+layout_mode = 0
+offset_left = 495.0
+offset_top = 430.0
+offset_right = 652.0
+offset_bottom = 469.0
+text = "Quit"
+
+[node name="Maze" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.08987, 0.105631, 0.426428)
+material_override = SubResource("StandardMaterial3D_78wwp")
+operation = 1
+use_collision = true
+size = Vector3(34.3028, 4.32951, 39.3544)
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="Maze"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.4617, 1.90917, -4.65471)
+operation = 2
+size = Vector3(2.2, 4.5, 27.498)
+
+[node name="CSGBox3D30" type="CSGBox3D" parent="Maze"]
+transform = Transform3D(-4.37114e-08, 0, 0.235484, 0, 1, 0, -1, 0, -1.02933e-08, -10.5651, 1.90917, 8.0969)
+operation = 2
+size = Vector3(2.2, 4.5, 27.498)
+
+[node name="CSGBox3D33" type="CSGBox3D" parent="Maze"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 0.235484, -10.5651, 1.90917, 12.1865)
+operation = 2
+size = Vector3(2.2, 4.5, 27.498)
+
+[node name="CSGBox3D34" type="CSGBox3D" parent="Maze"]
+transform = Transform3D(-4.37114e-08, 0, 0.181137, 0, 1, 0, -1, 0, -7.91774e-09, -13.9103, 1.90917, 14.22)
+operation = 2
+size = Vector3(2.2, 4.5, 27.498)
+
+[node name="CSGBox3D35" type="CSGBox3D" parent="Maze"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 0.116625, -13.6948, 1.90917, 16.4523)
+operation = 2
+size = Vector3(2.2, 4.5, 27.498)
+
+[node name="CSGBox3D31" type="CSGBox3D" parent="Maze"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 0.205361, -10.5651, 1.90917, 4.55952)
+operation = 2
+size = Vector3(2.2, 4.5, 27.498)
+
+[node name="CSGBox3D32" type="CSGBox3D" parent="Maze"]
+transform = Transform3D(-4.37114e-08, 0, 0.376395, 0, 1, 0, -1, 0, -1.64528e-08, -6.02261, 1.90917, 2.69519)
+operation = 2
+size = Vector3(2.2, 4.5, 27.498)
+
+[node name="CSGBox3D36" type="CSGBox3D" parent="Maze"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 0.223261, -4.73046, 1.90917, 6.12702)
+operation = 2
+size = Vector3(2.2, 4.5, 27.498)
+
+[node name="CSGBox3D37" type="CSGBox3D" parent="Maze"]
+transform = Transform3D(-4.37114e-08, 0, 0.223261, 0, 1, 0, -1, 0, -9.75903e-09, -1.14034, 1.90917, 8.08094)
+operation = 2
+size = Vector3(2.2, 4.5, 27.498)
+
+[node name="CSGBox3D41" type="CSGBox3D" parent="Maze"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 0.223261, 0.805665, 1.90917, 4.35725)
+operation = 2
+size = Vector3(2.2, 4.5, 27.498)
+
+[node name="CSGBox3D42" type="CSGBox3D" parent="Maze"]
+transform = Transform3D(-4.37114e-08, 0, 0.156282, 0, 1, 0, -1, 0, -6.83132e-09, 3.80566, 1.90917, 4.35725)
+operation = 2
+size = Vector3(2.2, 4.5, 27.498)
+
+[node name="CSGBox3D38" type="CSGBox3D" parent="Maze"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 0.223261, -4.69777, 1.90917, 10.6965)
+operation = 2
+size = Vector3(2.2, 4.5, 27.498)
+
+[node name="CSGBox3D43" type="CSGBox3D" parent="Maze"]
+transform = Transform3D(-4.37114e-08, 0, 0.312565, 0, 1, 0, -1, 0, -1.36626e-08, -3.69777, 1.90917, 12.6965)
+operation = 2
+size = Vector3(2.2, 4.5, 27.498)
+
+[node name="CSGBox3D" type="CSGBox3D" parent="Maze"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -10.9925, 0, -12.5969)
+operation = 2
+size = Vector3(2.2, 4.5, 5)
+
+[node name="CSGBox3D4" type="CSGBox3D" parent="Maze"]
+transform = Transform3D(-4.37114e-08, 0, 2, 0, 1, 0, -1, 0, -8.74228e-08, -8.49583, 0, -1.5969)
+operation = 2
+size = Vector3(2.2, 4.5, 5)
+
+[node name="CSGBox3D5" type="CSGBox3D" parent="Maze"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1.0916, -8.49583, 0, -5.26746)
+operation = 2
+size = Vector3(2.2, 4.5, 5)
+
+[node name="CSGBox3D6" type="CSGBox3D" parent="Maze"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1.0916, -4.59697, 0, -5.26746)
+operation = 2
+size = Vector3(2.2, 4.5, 5)
+
+[node name="CSGBox3D7" type="CSGBox3D" parent="Maze"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1.0916, -4.59697, 0, -10.6749)
+operation = 2
+size = Vector3(2.2, 4.5, 5)
+
+[node name="CSGBox3D8" type="CSGBox3D" parent="Maze"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1.0916, -4.59697, 0, -15.9189)
+operation = 2
+size = Vector3(2.2, 4.5, 5)
+
+[node name="CSGBox3D9" type="CSGBox3D" parent="Maze"]
+transform = Transform3D(-4.37114e-08, 0, 1.0916, 0, 1, 0, -1, 0, -4.77153e-08, -0.88643, 0, -17.6099)
+operation = 2
+size = Vector3(2.2, 4.5, 5)
+
+[node name="CSGBox3D10" type="CSGBox3D" parent="Maze"]
+transform = Transform3D(-4.37114e-08, 0, 1.0916, 0, 1, 0, -1, 0, -4.77153e-08, 2.15024, 0, -17.6099)
+operation = 2
+size = Vector3(2.2, 4.5, 5)
+
+[node name="CSGBox3D11" type="CSGBox3D" parent="Maze"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1.0916, 3.78306, 0, -13.9842)
+operation = 2
+size = Vector3(2.2, 4.5, 5)
+
+[node name="CSGBox3D12" type="CSGBox3D" parent="Maze"]
+transform = Transform3D(-4.37114e-08, 0, 1.0916, 0, 1, 0, -1, 0, -4.77153e-08, 7.55346, 0, -12.3629)
+operation = 2
+size = Vector3(2.2, 4.5, 5)
+
+[node name="CSGBox3D13" type="CSGBox3D" parent="Maze"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1.0916, 9.16902, 0, -15.8611)
+operation = 2
+size = Vector3(2.2, 4.5, 5)
+
+[node name="CSGBox3D14" type="CSGBox3D" parent="Maze"]
+transform = Transform3D(-4.37114e-08, 0, 1.0916, 0, 1, 0, -1, 0, -4.77153e-08, 12.8345, 0, -17.5106)
+operation = 2
+size = Vector3(2.2, 4.5, 5)
+
+[node name="CSGBox3D15" type="CSGBox3D" parent="Maze"]
+transform = Transform3D(-4.37114e-08, 0, 1.0916, 0, 1, 0, -1, 0, -4.77153e-08, 12.8345, 0, -12.299)
+operation = 2
+size = Vector3(2.2, 4.5, 5)
+
+[node name="CSGBox3D16" type="CSGBox3D" parent="Maze"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1.0916, 14.5468, 0, -8.66233)
+operation = 2
+size = Vector3(2.2, 4.5, 5)
+
+[node name="CSGBox3D17" type="CSGBox3D" parent="Maze"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1.0916, 14.5468, 0, -3.85775)
+operation = 2
+size = Vector3(2.2, 4.5, 5)
+
+[node name="CSGBox3D18" type="CSGBox3D" parent="Maze"]
+transform = Transform3D(-4.37114e-08, 0, 1.0916, 0, 1, 0, -1, 0, -4.77153e-08, 10.9103, 0, -2.22052)
+operation = 2
+size = Vector3(2.2, 4.5, 5)
+
+[node name="CSGBox3D19" type="CSGBox3D" parent="Maze"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1.0916, 9.20191, 0, 1.46886)
+operation = 2
+size = Vector3(2.2, 4.5, 5)
+
+[node name="CSGBox3D20" type="CSGBox3D" parent="Maze"]
+transform = Transform3D(-4.37114e-08, 0, 1.0916, 0, 1, 0, -1, 0, -4.77153e-08, 12.9636, 0, 3.10671)
+operation = 2
+size = Vector3(2.2, 4.5, 5)
+
+[node name="CSGBox3D24" type="CSGBox3D" parent="Maze"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1.0916, 14.5996, 0, 6.79905)
+operation = 2
+size = Vector3(2.2, 4.5, 5)
+
+[node name="CSGBox3D25" type="CSGBox3D" parent="Maze"]
+transform = Transform3D(-4.37114e-08, 0, 1.0916, 0, 1, 0, -1, 0, -4.77153e-08, 10.9842, 0, 8.5066)
+operation = 2
+size = Vector3(2.2, 4.5, 5)
+
+[node name="CSGBox3D26" type="CSGBox3D" parent="Maze"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1.0916, 9.43335, 0, 12.2574)
+operation = 2
+size = Vector3(2.2, 4.5, 5)
+
+[node name="CSGBox3D27" type="CSGBox3D" parent="Maze"]
+transform = Transform3D(-4.37114e-08, 0, 1.0916, 0, 1, 0, -1, 0, -4.77153e-08, 12.5614, 0, 13.9772)
+operation = 2
+size = Vector3(2.2, 4.5, 5)
+
+[node name="CSGBox3D28" type="CSGBox3D" parent="Maze"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1.0916, 14.1787, 0, 15.9939)
+operation = 2
+size = Vector3(2.2, 4.5, 5)
+
+[node name="CSGBox3D29" type="CSGBox3D" parent="Maze"]
+transform = Transform3D(-4.37114e-08, 0, 1.0916, 0, 1, 0, -1, 0, -4.77153e-08, 10.6385, 0, 17.8345)
+operation = 2
+size = Vector3(2.2, 4.5, 5)
+
+[node name="CSGBox3D21" type="CSGBox3D" parent="Maze"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1.0916, 9.18019, 0, -5.37474)
+operation = 2
+size = Vector3(2.2, 4.5, 5)
+
+[node name="CSGBox3D22" type="CSGBox3D" parent="Maze"]
+transform = Transform3D(-4.37114e-08, 0, 1.0916, 0, 1, 0, -1, 0, -4.77153e-08, 5.70677, 0, -7.05817)
+operation = 2
+size = Vector3(2.2, 4.5, 5)
+
+[node name="CSGBox3D39" type="CSGBox3D" parent="Maze"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1.0916, 4.02955, 0, -4.58773)
+operation = 2
+size = Vector3(2.2, 4.5, 5)
+
+[node name="CSGBox3D40" type="CSGBox3D" parent="Maze"]
+transform = Transform3D(-4.37114e-08, 0, 1.0916, 0, 1, 0, -1, 0, -4.77153e-08, 0.572939, 0, -2.96203)
+operation = 2
+size = Vector3(2.2, 4.5, 5)
+
+[node name="CSGBox3D23" type="CSGBox3D" parent="Maze"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1.57395, -0.281285, 0, -12.9346)
+operation = 2
+size = Vector3(2.2, 4.5, 5)
+
+[node name="CSGBox3D3" type="CSGBox3D" parent="Maze"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.5997, 0, -15.9971)
+operation = 2
+size = Vector3(2.2, 4.5, 5)
+
+[node name="Goal" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 0, 18.1604)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Goal"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, 0.141438)
+shape = SubResource("BoxShape3D_fq4gx")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Goal"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.05148, 1.13035, 0.0932484)
+mesh = SubResource("CapsuleMesh_jh5jt")
+
+[node name="UI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("6_gw5bf")
+
+[node name="Label" type="Label" parent="UI"]
+layout_mode = 1
+offset_right = 40.0
+offset_bottom = 23.0
+label_settings = ExtResource("4_b5jnx")
+
+[node name="Timer" type="Timer" parent="UI"]
+wait_time = 0.001
+autostart = true
+
+[node name="Label2" type="Label" parent="UI"]
+visible = false
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 77.0
+offset_top = 323.0
+offset_right = 221.0
+offset_bottom = 349.0
+grow_vertical = 2
+text = "Press E to interact:"
+
+[node name="Teleport1" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.35143, 1.10923, 13.1026)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Teleport1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.165652, 0.341158, 0.157473)
+shape = SubResource("BoxShape3D_lqryt")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Teleport1"]
+transform = Transform3D(1, 0, 0, 0, 0.197568, 0, 0, 0, 1, 0, -0.199321, 0.114289)
+material_override = SubResource("StandardMaterial3D_bbvsb")
+mesh = SubResource("BoxMesh_4foes")
+
+[node name="Teleport2" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.04838, 1.10923, -2.67791)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Teleport2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.165652, 0.341158, 0.157473)
+shape = SubResource("BoxShape3D_lqryt")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Teleport2"]
+transform = Transform3D(1, 0, 0, 0, 0.197568, 0, 0, 0, 1, 0, -0.199321, 0.114289)
+material_override = SubResource("StandardMaterial3D_opo7v")
+mesh = SubResource("BoxMesh_4foes")
+
+[node name="Area3D" type="Area3D" parent="."]
+
+[node name="NPC" type="MeshInstance3D" parent="Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.585, 0.992168, -16.3221)
+mesh = SubResource("CapsuleMesh_hs7jk")
+skeleton = NodePath("../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+transform = Transform3D(1.29972, 0, 0, 0, 1.60258, 0, 0, 0, 2.65058, -10.4262, 0.976923, -15.5804)
+shape = SubResource("BoxShape3D_d5yfu")
+
+[node name="Enemy" type="CharacterBody3D" parent="."]
+transform = Transform3D(-0.5, 0, -4.37114e-08, 0, 0.5, 0, 4.37114e-08, 0, -0.5, -15.7109, 0.75131, 1.62738)
+script = ExtResource("9_bp0ki")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="Enemy"]
+transform = Transform3D(-2, 0, 1.74846e-07, 0, 2, 0, -1.74846e-07, 0, -2, 0.050621, 0.628791, -0.285916)
+shape = SubResource("CapsuleShape3D_81cq7")
+
+[node name="characterMedium" parent="Enemy" instance=ExtResource("9_mwj6m")]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -0.0941696, -1.40527, -2.38419e-07)
+
+[node name="Hitbox" type="Area3D" parent="Enemy"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.93834, 0)
+visible = false
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="Enemy/Hitbox"]
+transform = Transform3D(-2, 0, 1.74846e-07, 0, 2, 0, -1.74846e-07, 0, -2, 0.050621, -0.79354, -0.285916)
+shape = SubResource("CapsuleShape3D_81cq7")
+
+[node name="Music" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("11_wtiw0")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_asiby")
+
+[connection signal="pressed" from="Menu/Resume" to="Menu" method="_on_resume_pressed"]
+[connection signal="pressed" from="Menu/Quit" to="Menu" method="_on_quit_pressed"]
+[connection signal="body_entered" from="Goal" to="." method="_on_goal_body_entered"]
+[connection signal="timeout" from="UI/Timer" to="UI" method="_on_timer_timeout"]
+[connection signal="body_entered" from="Teleport1" to="Player" method="_on_teleport_1_body_entered"]
+[connection signal="body_entered" from="Teleport2" to="Player" method="_on_teleport_2_body_entered"]
+[connection signal="body_entered" from="Area3D" to="Player" method="_on_area_3d_body_entered"]
+[connection signal="body_entered" from="Area3D" to="UI" method="_on_area_3d_body_entered"]
+[connection signal="body_exited" from="Area3D" to="UI" method="_on_area_3d_body_exited"]
+[connection signal="area_entered" from="Enemy/Hitbox" to="Player" method="_on_hitbox_area_entered"]

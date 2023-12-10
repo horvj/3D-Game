@@ -2,14 +2,9 @@ extends CanvasLayer
 
 
 @onready var balloon: Panel = %Balloon
-@onready var character_portrait: TextureRect = %Portrait
 @onready var character_label: RichTextLabel = %CharacterLabel
 @onready var dialogue_label: DialogueLabel = %DialogueLabel
 @onready var responses_menu: DialogueResponsesMenu = %ResponsesMenu
-@export var portraits = [
-	{ "name": "Player", "portrait": load("res://Assets/Player_Portrait.png") }
-	,{ "name": "Zombie", "portrait": load("res://Assets/Zombie_Portrait.png") }
-]
 
 ## The dialogue resource
 var resource: DialogueResource
@@ -38,12 +33,7 @@ var dialogue_line: DialogueLine:
 		character_label.visible = not dialogue_line.character.is_empty()
 		character_label.text = tr(dialogue_line.character, "dialogue")
 		var found_p = false
-		for p in portraits:
-			if dialogue_line.character == p["name"]:
-				character_portrait.texture = p["portrait"]
-				found_p = true
-		if not found_p:
-			character_portrait.hide()
+		
 
 		dialogue_label.hide()
 		dialogue_label.dialogue_line = dialogue_line
